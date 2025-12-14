@@ -11,15 +11,16 @@ export default function Home() {
     <div className="flex min-h-screen flex-col">
       <Navbar />
       <main className="flex-1">
-        <section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-b from-background to-muted">
-          <div className="container px-4 md:px-6">
+        <section className="w-full py-12 md:py-24 lg:py-32 relative overflow-hidden">
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary/20 via-background to-background pointer-events-none" />
+          <div className="container px-4 md:px-6 relative z-10">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
-                <Badge className="px-3 py-1 text-sm" variant="secondary">
-                  <Sparkles className="mr-1 h-3 w-3" />
+                <Badge className="px-3 py-1 text-sm border-primary/20" variant="secondary">
+                  <Sparkles className="mr-1 h-3 w-3 text-[hsl(var(--highlight))]" />
                   Discover. Create. Collaborate.
                 </Badge>
-                <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl">
+                <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl bg-clip-text text-transparent bg-gradient-to-b from-white to-white/70">
                   Where Ideas Become Projects
                 </h1>
                 <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl">
@@ -28,13 +29,13 @@ export default function Home() {
                 </p>
               </div>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Button asChild size="lg">
+                <Button asChild size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90">
                   <Link href="/projects">
                     Browse Projects
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
                 </Button>
-                <Button asChild variant="outline" size="lg">
+                <Button asChild variant="outline" size="lg" className="border-primary/20 hover:bg-primary/10 hover:text-primary">
                   <Link href="/projects/new">
                     <Plus className="mr-2 h-4 w-4" />
                     Share Your Idea
@@ -67,7 +68,7 @@ export default function Home() {
                         </div>
                         {project.trending && (
                           <Badge variant="secondary" className="flex items-center gap-1">
-                            <Flame className="h-3 w-3 text-orange-500" />
+                            <Flame className="h-3 w-3 text-[hsl(var(--highlight))]" />
                             Trending
                           </Badge>
                         )}
