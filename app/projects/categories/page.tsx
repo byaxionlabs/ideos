@@ -79,7 +79,7 @@ export default function CategoriesPage() {
                     </div>
 
                     <Tabs defaultValue="web-app" className="w-full">
-                        <TabsList className="flex overflow-x-auto pb-2 mb-4">
+                        <TabsList className="flex">
                             <TabsTrigger value="all">All Categories</TabsTrigger>
                             <TabsTrigger value="web-app">Web App</TabsTrigger>
                             <TabsTrigger value="phone-app">Phone App</TabsTrigger>
