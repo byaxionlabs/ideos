@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { ProjectCard } from "@/components/project-card"
 
 export default function CategoriesPage() {
     return (
@@ -89,51 +90,7 @@ export default function CategoriesPage() {
                         <TabsContent value="web-app" className="space-y-6">
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                                 {webAppProjects.map((project) => (
-                                    <Card
-                                        key={project.id}
-                                        className="overflow-hidden border border-gray-200 hover:border-gray-300 transition-all"
-                                    >
-                                        <CardHeader className="pb-2">
-                                            <div className="flex justify-between items-start">
-                                                <div className="space-y-1">
-                                                    <CardTitle className="text-xl font-semibold">
-                                                        <Link href={`/projects/${project.id}`} className="hover:underline">
-                                                            {project.title}
-                                                        </Link>
-                                                    </CardTitle>
-                                                    <div className="flex items-center text-sm text-muted-foreground">
-                                                        <span>By {project.author}</span>
-                                                    </div>
-                                                </div>
-                                                <Badge>{project.category}</Badge>
-                                            </div>
-                                        </CardHeader>
-                                        <CardContent className="pb-2">
-                                            <p className="text-sm text-muted-foreground line-clamp-2">{project.description}</p>
-                                            <div className="flex flex-wrap gap-2 mt-3">
-                                                {project.tags.map((tag) => (
-                                                    <Badge key={tag} variant="secondary" className="bg-gray-100 hover:bg-gray-200 text-gray-800">
-                                                        {tag}
-                                                    </Badge>
-                                                ))}
-                                            </div>
-                                        </CardContent>
-                                        <CardFooter className="pt-2 text-sm text-muted-foreground border-t">
-                                            <div className="flex items-center justify-between w-full">
-                                                <div className="flex items-center gap-2">
-                                                    <div className="flex -space-x-2">
-                                                        {[1, 2, 3].map((i) => (
-                                                            <div key={i} className="h-6 w-6 rounded-full bg-gray-200 border-2 border-white" />
-                                                        ))}
-                                                    </div>
-                                                    <span>{project.collaborators} collaborators</span>
-                                                </div>
-                                                <div className="flex items-center gap-1">
-                                                    <span>{project.likes} likes</span>
-                                                </div>
-                                            </div>
-                                        </CardFooter>
-                                    </Card>
+                                    <ProjectCard key={project.id} project={project} />
                                 ))}
                             </div>
 
@@ -227,62 +184,92 @@ const webAppProjects = [
     {
         id: "1",
         title: "Collaborative Whiteboard App",
-        author: "Sarah Johnson",
+        author: {
+            name: "Sarah Johnson",
+            avatar: "/placeholder.svg?height=32&width=32",
+            initials: "SJ"
+        },
         category: "Web App",
         description: "A real-time collaborative whiteboard for remote teams with infinite canvas and smart drawing tools.",
-        tags: ["Collaboration", "Design", "Remote Work"],
+        techStack: ["Collaboration", "Design", "Remote Work"],
         collaborators: 8,
         likes: 124,
+        comments: 12
     },
     {
         id: "2",
         title: "Personal Finance Dashboard",
-        author: "Michael Chen",
+        author: {
+            name: "Michael Chen",
+            avatar: "/placeholder.svg?height=32&width=32",
+            initials: "MC"
+        },
         category: "Web App",
         description:
             "A comprehensive dashboard for tracking expenses, investments, and financial goals with AI-powered insights.",
-        tags: ["Finance", "Dashboard", "Analytics"],
+        techStack: ["Finance", "Dashboard", "Analytics"],
         collaborators: 5,
         likes: 98,
+        comments: 8
     },
     {
         id: "3",
         title: "Learning Management System",
-        author: "Emma Rodriguez",
+        author: {
+            name: "Emma Rodriguez",
+            avatar: "/placeholder.svg?height=32&width=32",
+            initials: "ER"
+        },
         category: "Web App",
         description: "A modern LMS with interactive courses, progress tracking, and social learning features.",
-        tags: ["Education", "E-Learning", "SaaS"],
+        techStack: ["Education", "E-Learning", "SaaS"],
         collaborators: 12,
         likes: 156,
+        comments: 24
     },
     {
         id: "4",
         title: "Project Management Tool",
-        author: "David Park",
+        author: {
+            name: "David Park",
+            avatar: "/placeholder.svg?height=32&width=32",
+            initials: "DP"
+        },
         category: "Web App",
         description: "A streamlined project management tool with kanban boards, time tracking, and resource allocation.",
-        tags: ["Productivity", "Teams", "Business"],
+        techStack: ["Productivity", "Teams", "Business"],
         collaborators: 6,
         likes: 87,
+        comments: 15
     },
     {
         id: "5",
         title: "E-commerce Analytics Platform",
-        author: "Alex Thompson",
+        author: {
+            name: "Alex Thompson",
+            avatar: "/placeholder.svg?height=32&width=32",
+            initials: "AT"
+        },
         category: "Web App",
         description: "Advanced analytics for e-commerce businesses with sales forecasting and inventory optimization.",
-        tags: ["E-commerce", "Analytics", "Business"],
+        techStack: ["E-commerce", "Analytics", "Business"],
         collaborators: 9,
         likes: 112,
+        comments: 7
     },
     {
         id: "6",
         title: "Content Creation Studio",
-        author: "Olivia Wilson",
+        author: {
+            name: "Olivia Wilson",
+            avatar: "/placeholder.svg?height=32&width=32",
+            initials: "OW"
+        },
         category: "Web App",
         description: "All-in-one platform for creating, editing, and scheduling content across multiple platforms.",
-        tags: ["Content", "Marketing", "Creative"],
+        techStack: ["Content", "Marketing", "Creative"],
         collaborators: 4,
         likes: 76,
+        comments: 5
     },
 ]

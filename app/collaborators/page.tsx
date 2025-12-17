@@ -113,54 +113,7 @@ export default function CollaboratorsPage() {
   )
 }
 
-function CollaboratorCard({ collaborator }) {
-  return (
-    <Card className="h-full overflow-hidden transition-all hover:shadow-lg">
-      <CardHeader className="p-6">
-        <div className="flex justify-between items-start">
-          <div className="flex items-center space-x-4">
-            <Avatar className="h-12 w-12 border">
-              <AvatarImage src={collaborator.avatar} alt={collaborator.name} />
-              <AvatarFallback>{collaborator.initials}</AvatarFallback>
-            </Avatar>
-            <div>
-              <Link href={`/profile/${collaborator.id}`} className="font-medium hover:underline">
-                {collaborator.name}
-              </Link>
-              <p className="text-sm text-muted-foreground">{collaborator.role}</p>
-            </div>
-          </div>
-          {collaborator.featured && (
-            <Badge variant="outline" className="flex items-center gap-1">
-              <Star className="h-3 w-3 fill-yellow-500 text-yellow-500" />
-              Featured
-            </Badge>
-          )}
-        </div>
-      </CardHeader>
-      <CardContent className="p-6 pt-0">
-        <p className="line-clamp-3 text-muted-foreground mb-4">{collaborator.bio}</p>
-        <div className="flex flex-wrap gap-2 mt-4">
-          {collaborator.skills.map((skill) => (
-            <Badge key={skill} variant="secondary">
-              {skill}
-            </Badge>
-          ))}
-        </div>
-      </CardContent>
-      <CardFooter className="p-6 border-t flex justify-between items-center">
-        <div className="text-sm text-muted-foreground">
-          <span>{collaborator.projects} Projects</span>
-          <span className="mx-2">•</span>
-          <span>{collaborator.collaborations} Collaborations</span>
-        </div>
-        <Button variant="outline" size="sm" asChild>
-          <Link href={`/profile/${collaborator.id}`}>View Profile</Link>
-        </Button>
-      </CardFooter>
-    </Card>
-  )
-}
+import { CollaboratorCard } from "@/components/collaborator-card"
 
 const collaborators = [
   {

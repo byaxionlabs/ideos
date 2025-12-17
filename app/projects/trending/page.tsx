@@ -6,6 +6,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Badge } from "@/components/ui/badge"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import Navbar from "@/components/navbar"
+import { ProjectCard } from "@/components/project-card"
+import { TopicCard } from "@/components/topic-card"
+import { CollaboratorCard } from "@/components/collaborator-card"
 
 export default function TrendingPage() {
     return (
@@ -43,61 +46,7 @@ export default function TrendingPage() {
                         <TabsContent value="projects" className="space-y-6">
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                                 {trendingProjects.map((project) => (
-                                    <Card
-                                        key={project.id}
-                                        className="overflow-hidden border border-gray-200 hover:border-gray-300 transition-all"
-                                    >
-                                        <CardHeader className="pb-2">
-                                            <div className="flex justify-between items-start">
-                                                <div className="space-y-1">
-                                                    <CardTitle className="text-xl font-semibold">
-                                                        <Link href={`/projects/${project.id}`} className="hover:underline">
-                                                            {project.title}
-                                                        </Link>
-                                                    </CardTitle>
-                                                    <div className="flex items-center text-sm text-muted-foreground">
-                                                        <span>By {project.author}</span>
-                                                    </div>
-                                                </div>
-                                                <Badge variant="outline" className="flex items-center gap-1 bg-gray-50">
-                                                    <ArrowUp className="h-3 w-3 text-green-600" />
-                                                    <span className="text-green-600">{project.growth}%</span>
-                                                </Badge>
-                                            </div>
-                                        </CardHeader>
-                                        <CardContent className="pb-2">
-                                            <p className="text-sm text-muted-foreground line-clamp-2">{project.description}</p>
-                                            <div className="flex flex-wrap gap-2 mt-3">
-                                                {project.tags.map((tag) => (
-                                                    <Badge key={tag} variant="secondary" className="bg-gray-100 hover:bg-gray-200 text-gray-800">
-                                                        {tag}
-                                                    </Badge>
-                                                ))}
-                                            </div>
-                                        </CardContent>
-                                        <CardFooter className="pt-2 text-sm text-muted-foreground border-t">
-                                            <div className="flex items-center justify-between w-full">
-                                                <div className="flex items-center gap-4">
-                                                    <div className="flex items-center gap-1">
-                                                        <Users className="h-4 w-4" />
-                                                        <span>{project.collaborators}</span>
-                                                    </div>
-                                                    <div className="flex items-center gap-1">
-                                                        <MessageSquare className="h-4 w-4" />
-                                                        <span>{project.comments}</span>
-                                                    </div>
-                                                    <div className="flex items-center gap-1">
-                                                        <BarChart2 className="h-4 w-4" />
-                                                        <span>{project.views}</span>
-                                                    </div>
-                                                </div>
-                                                <div className="flex items-center gap-1 text-xs">
-                                                    <Clock className="h-3 w-3" />
-                                                    <span>{project.timeAgo}</span>
-                                                </div>
-                                            </div>
-                                        </CardFooter>
-                                    </Card>
+                                    <ProjectCard key={project.id} project={project} />
                                 ))}
                             </div>
 
@@ -109,33 +58,7 @@ export default function TrendingPage() {
                         <TabsContent value="topics" className="space-y-6">
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                                 {trendingTopics.map((topic) => (
-                                    <Card
-                                        key={topic.id}
-                                        className="overflow-hidden border border-gray-200 hover:border-gray-300 transition-all"
-                                    >
-                                        <CardHeader>
-                                            <div className="flex justify-between items-start">
-                                                <CardTitle className="text-xl font-semibold">#{topic.name}</CardTitle>
-                                                <Badge variant="outline" className="flex items-center gap-1 bg-gray-50">
-                                                    <ArrowUp className="h-3 w-3 text-green-600" />
-                                                    <span className="text-green-600">{topic.growth}%</span>
-                                                </Badge>
-                                            </div>
-                                        </CardHeader>
-                                        <CardContent>
-                                            <p className="text-sm text-muted-foreground">{topic.projectCount} projects this week</p>
-                                            <p className="text-sm text-muted-foreground mt-2">{topic.description}</p>
-                                        </CardContent>
-                                        <CardFooter className="flex justify-between border-t pt-4">
-                                            <Button variant="outline" size="sm" asChild>
-                                                <Link href={`/topics/${topic.id}`}>Explore Topic</Link>
-                                            </Button>
-                                            <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                                                <Users className="h-3 w-3" />
-                                                <span>{topic.activeUsers} active users</span>
-                                            </div>
-                                        </CardFooter>
-                                    </Card>
+                                    <TopicCard key={topic.id} topic={topic} />
                                 ))}
                             </div>
 
@@ -147,55 +70,7 @@ export default function TrendingPage() {
                         <TabsContent value="collaborators" className="space-y-6">
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                                 {trendingCollaborators.map((collaborator) => (
-                                    <Card
-                                        key={collaborator.id}
-                                        className="overflow-hidden border border-gray-200 hover:border-gray-300 transition-all"
-                                    >
-                                        <CardHeader>
-                                            <div className="flex items-center gap-4">
-                                                <div className="h-12 w-12 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
-                                                    <img
-                                                        src={`/placeholder.svg?height=48&width=48&text=${collaborator.name.charAt(0)}`}
-                                                        alt={collaborator.name}
-                                                        className="h-full w-full object-cover"
-                                                    />
-                                                </div>
-                                                <div>
-                                                    <CardTitle className="text-lg font-semibold">
-                                                        <Link href={`/profile/${collaborator.id}`} className="hover:underline">
-                                                            {collaborator.name}
-                                                        </Link>
-                                                    </CardTitle>
-                                                    <p className="text-sm text-muted-foreground">{collaborator.role}</p>
-                                                </div>
-                                            </div>
-                                        </CardHeader>
-                                        <CardContent>
-                                            <div className="flex flex-wrap gap-2 mb-3">
-                                                {collaborator.skills.map((skill) => (
-                                                    <Badge key={skill} variant="secondary" className="bg-gray-100 hover:bg-gray-200 text-gray-800">
-                                                        {skill}
-                                                    </Badge>
-                                                ))}
-                                            </div>
-                                            <p className="text-sm text-muted-foreground">{collaborator.bio}</p>
-                                        </CardContent>
-                                        <CardFooter className="flex justify-between border-t pt-4">
-                                            <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                                                <div className="flex items-center gap-1">
-                                                    <BarChart2 className="h-4 w-4" />
-                                                    <span>{collaborator.projectCount} projects</span>
-                                                </div>
-                                                <div className="flex items-center gap-1">
-                                                    <Users className="h-4 w-4" />
-                                                    <span>{collaborator.connections} connections</span>
-                                                </div>
-                                            </div>
-                                            <Button variant="outline" size="sm" asChild>
-                                                <Link href={`/profile/${collaborator.id}`}>View Profile</Link>
-                                            </Button>
-                                        </CardFooter>
-                                    </Card>
+                                    <CollaboratorCard key={collaborator.id} collaborator={collaborator} />
                                 ))}
                             </div>
 
@@ -215,74 +90,100 @@ const trendingProjects = [
     {
         id: "1",
         title: "AI-Powered Content Generator",
-        author: "Sarah Johnson",
+        category: "Web Application",
+        author: {
+            name: "Sarah Johnson",
+            avatar: "/placeholder.svg?height=32&width=32",
+            initials: "SJ"
+        },
         description: "A tool that uses AI to generate high-quality content for blogs, social media, and more.",
-        tags: ["AI", "Content", "Web App"],
+        techStack: ["AI", "Content", "Web App"],
         collaborators: 8,
         comments: 24,
-        views: 1.2 + "k",
-        timeAgo: "2 days ago",
-        growth: 128,
+        likes: 1200,
+        trending: true,
+        featured: true
     },
     {
         id: "2",
         title: "Decentralized Finance Dashboard",
-        author: "Michael Chen",
+        category: "Blockchain",
+        author: {
+            name: "Michael Chen",
+            avatar: "/placeholder.svg?height=32&width=32",
+            initials: "MC"
+        },
         description: "A comprehensive dashboard for tracking and managing DeFi investments across multiple chains.",
-        tags: ["DeFi", "Blockchain", "Dashboard"],
+        techStack: ["DeFi", "Blockchain", "Dashboard"],
         collaborators: 5,
         comments: 18,
-        views: 876,
-        timeAgo: "1 day ago",
-        growth: 95,
+        likes: 876,
+        trending: true
     },
     {
         id: "3",
         title: "Sustainable Supply Chain Tracker",
-        author: "Emma Rodriguez",
+        category: "Enterprise",
+        author: {
+            name: "Emma Rodriguez",
+            avatar: "/placeholder.svg?height=32&width=32",
+            initials: "ER"
+        },
         description: "Track and verify sustainability metrics across complex supply chains using blockchain.",
-        tags: ["Sustainability", "Blockchain", "Enterprise"],
+        techStack: ["Sustainability", "Blockchain", "Enterprise"],
         collaborators: 12,
         comments: 31,
-        views: 2.4 + "k",
-        timeAgo: "3 days ago",
-        growth: 87,
+        likes: 2400,
+        trending: true
     },
     {
         id: "4",
         title: "Mental Health Companion App",
-        author: "David Park",
+        category: "Mobile App",
+        author: {
+            name: "David Park",
+            avatar: "/placeholder.svg?height=32&width=32",
+            initials: "DP"
+        },
         description: "An app that provides daily mental health check-ins, guided meditation, and personalized resources.",
-        tags: ["Health", "Mobile App", "AI"],
+        techStack: ["Health", "Mobile App", "AI"],
         collaborators: 6,
         comments: 42,
-        views: 3.1 + "k",
-        timeAgo: "5 days ago",
-        growth: 76,
+        likes: 3100,
+        trending: true,
+        featured: true
     },
     {
         id: "5",
         title: "Collaborative Code Editor",
-        author: "Alex Thompson",
+        category: "Web Application",
+        author: {
+            name: "Alex Thompson",
+            avatar: "/placeholder.svg?height=32&width=32",
+            initials: "AT"
+        },
         description: "Real-time collaborative code editor with integrated AI suggestions and version control.",
-        tags: ["Development", "Collaboration", "Web App"],
+        techStack: ["Development", "Collaboration", "Web App"],
         collaborators: 9,
         comments: 27,
-        views: 1.8 + "k",
-        timeAgo: "2 days ago",
-        growth: 65,
+        likes: 1800,
+        trending: true
     },
     {
         id: "6",
         title: "AR Navigation for Urban Exploration",
-        author: "Olivia Wilson",
+        category: "Mobile App",
+        author: {
+            name: "Olivia Wilson",
+            avatar: "/placeholder.svg?height=32&width=32",
+            initials: "OW"
+        },
         description: "Augmented reality app that helps users discover hidden gems and historical sites in urban areas.",
-        tags: ["AR", "Mobile App", "Travel"],
+        techStack: ["AR", "Mobile App", "Travel"],
         collaborators: 4,
         comments: 19,
-        views: 925,
-        timeAgo: "4 days ago",
-        growth: 58,
+        likes: 925,
+        trending: true
     },
 ]
 
@@ -347,6 +248,10 @@ const trendingCollaborators = [
         bio: "Passionate about building scalable web applications and mentoring junior developers.",
         projectCount: 12,
         connections: 87,
+        avatar: "/placeholder.svg?height=48&width=48",
+        initials: "AM",
+        projects: 12,
+        collaborations: 15
     },
     {
         id: "2",
@@ -356,6 +261,10 @@ const trendingCollaborators = [
         bio: "Creating intuitive and accessible user experiences that solve real problems.",
         projectCount: 8,
         connections: 64,
+        avatar: "/placeholder.svg?height=48&width=48",
+        initials: "PS",
+        projects: 8,
+        collaborations: 10
     },
     {
         id: "3",
@@ -365,6 +274,10 @@ const trendingCollaborators = [
         bio: "Developing AI solutions that make technology more helpful and accessible to everyone.",
         projectCount: 15,
         connections: 112,
+        avatar: "/placeholder.svg?height=48&width=48",
+        initials: "MJ",
+        projects: 15,
+        collaborations: 20
     },
     {
         id: "4",
@@ -374,6 +287,10 @@ const trendingCollaborators = [
         bio: "Turning innovative ideas into successful products through strategic planning and execution.",
         projectCount: 9,
         connections: 93,
+        avatar: "/placeholder.svg?height=48&width=48",
+        initials: "SR",
+        projects: 9,
+        collaborations: 12
     },
     {
         id: "5",
@@ -383,6 +300,10 @@ const trendingCollaborators = [
         bio: "Building the decentralized future through innovative blockchain applications.",
         projectCount: 11,
         connections: 76,
+        avatar: "/placeholder.svg?height=48&width=48",
+        initials: "JW",
+        projects: 11,
+        collaborations: 14
     },
     {
         id: "6",
@@ -392,5 +313,9 @@ const trendingCollaborators = [
         bio: "Creating seamless mobile experiences that users love across iOS and Android platforms.",
         projectCount: 14,
         connections: 81,
+        avatar: "/placeholder.svg?height=48&width=48",
+        initials: "EC",
+        projects: 14,
+        collaborations: 18
     },
 ]
