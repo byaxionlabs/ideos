@@ -267,7 +267,7 @@ export default function Navbar() {
                     </Badge>
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />
-                  <div className="max-h-[300px] overflow-y-auto">
+<div className="max-h-[300px] overflow-y-auto overflow-x-hidden">
                     <DropdownMenuItem className="flex flex-col items-start gap-1 p-4 cursor-default">
                       <div className="flex w-full justify-between">
                         <span className="font-medium">New collaboration request</span>
