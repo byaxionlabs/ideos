@@ -11,7 +11,7 @@ import Navbar from "@/components/navbar"
 export default function LoginPage() {
   return (
     <div className="flex min-h-screen flex-col">
-      <Navbar />
+    
       <main className="flex-1 flex items-center justify-center py-12">
         <div className="container px-4 md:px-6">
           <div className="flex flex-col items-center justify-center space-y-4 text-center">
