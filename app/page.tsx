@@ -9,7 +9,7 @@ import Navbar from "@/components/navbar"
 export default function Home() {
   return (
     <div className="flex min-h-screen flex-col">
-      <Navbar />
+     
       <main className="flex-1">
         <section className="w-full py-12 md:py-24 lg:py-32 relative overflow-hidden">
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary/20 via-background to-background pointer-events-none" />

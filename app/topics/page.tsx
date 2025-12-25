@@ -8,7 +8,6 @@ import { Filter, Search } from "lucide-react"
 export default function TopicsPage() {
     return (
         <div className="flex min-h-screen flex-col">
-            <Navbar />
             <main className="flex-1">
                 <div className="container px-4 py-6 md:py-10">
                     <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">

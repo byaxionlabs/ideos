@@ -141,7 +141,7 @@ export default function ProjectPage({ params }) {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <Navbar />
+    
       <main className="flex-1">
         <div className="container px-4 py-6 md:py-10">
           <div className="grid gap-6 lg:grid-cols-3">

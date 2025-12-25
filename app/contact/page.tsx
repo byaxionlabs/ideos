@@ -19,7 +19,7 @@ export default function ContactPage() {
   const [message, setMessage] = useState("")
   const [submitted, setSubmitted] = useState(false)
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     // In a real app, you would submit the form data to your backend
     console.log({ name, email, subject, message })
