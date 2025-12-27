@@ -1,3 +1,4 @@
+"use client"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
@@ -5,13 +6,58 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Separator } from "@/components/ui/separator"
-import { Github, Mail } from "lucide-react"
+import { Mail } from "lucide-react"
+import Github from "@/components/ui/Github"
 import Navbar from "@/components/navbar"
+import { authClient } from "@/lib/auth-client"
+import { useState } from "react"
 
 export default function LoginPage() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [isRemember, setisRemember] = useState(false);
+  const [provider, setProvider] = useState("");
+
+  async function handleSignInWithProvider() {
+
+    const result = await authClient.signIn.social({
+      provider: provider,
+      callbackURL: "/",
+    })
+
+    if (!result.data) {
+      setError(result.error?.message || `Sign-in With ${provider} failed`)
+    } else {
+
+    }
+
+
+  }
+  async function handleSignIn() {
+    setLoading(true);
+    setError(null);
+
+    const result = await authClient.signIn.email({
+      email,
+      password,
+      rememberMe: isRemember,
+      callbackURL: "/",
+    });
+
+    if (!result.data) {
+      setError(result.error?.message || "Sign-in failed");
+    } else {
+      // handle redirect or refresh
+      // window.location.href = "/";
+    }
+    setLoading(false);
+  }
+
   return (
     <div className="flex min-h-screen flex-col">
-    
+
       <main className="flex-1 flex items-center justify-center py-12">
         <div className="container px-4 md:px-6">
           <div className="flex flex-col items-center justify-center space-y-4 text-center">
@@ -25,7 +71,7 @@ export default function LoginPage() {
                   <div className="grid gap-4">
                     <div className="grid gap-2">
                       <Label htmlFor="email">Email</Label>
-                      <Input id="email" type="email" placeholder="name@example.com" />
+                      <Input id="email" type="email" placeholder="name@example.com" value={email} onChange={(e) => setEmail(e.target.value)} />
                     </div>
                     <div className="grid gap-2">
                       <div className="flex items-center justify-between">
@@ -37,16 +83,16 @@ export default function LoginPage() {
                           Forgot password?
                         </Link>
                       </div>
-                      <Input id="password" type="password" />
+                      <Input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
                     </div>
                     <div className="flex items-center space-x-2">
-                      <Checkbox id="remember" />
+                      <Checkbox id="remember" checked={isRemember} onCheckedChange={(checkedState) => setisRemember(!!checkedState)} />
                       <Label htmlFor="remember" className="text-sm font-normal">
                         Remember me
                       </Label>
                     </div>
-                    <Button type="submit" className="w-full">
-                      Sign In
+                    <Button type="submit" className="w-full" onClick={() => handleSignIn()} disabled={loading}>
+                      {loading ? "Signing in…" : "Login"}
                     </Button>
                   </div>
                   <div className="mt-4 text-center text-sm">
@@ -63,11 +109,11 @@ export default function LoginPage() {
                     <Separator className="flex-1" />
                   </div>
                   <div className="mt-4 grid grid-cols-2 gap-2">
-                    <Button variant="outline" className="w-full">
-                      <Github className="mr-2 h-4 w-4" />
+                    <Button variant="outline" className="w-full" onClick={() => { setProvider("github"); handleSignInWithProvider() }}>
+                      <Github />
                       GitHub
                     </Button>
-                    <Button variant="outline" className="w-full">
+                    <Button variant="outline" className="w-full" onClick={() => { setProvider("google"); handleSignInWithProvider() }}>
                       <Mail className="mr-2 h-4 w-4" />
                       Google
                     </Button>

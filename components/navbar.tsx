@@ -28,12 +28,18 @@ import { Bell, Menu, Moon, Search, Sun } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { useTheme } from "next-themes"
 import { Badge } from "@/components/ui/badge"
+import { authClient } from "@/lib/auth-client"
+
 
 export default function Navbar() {
   const pathname = usePathname()
   const [isSearchOpen, setIsSearchOpen] = useState(false)
   const { theme, setTheme } = useTheme()
-  const isLoggedIn = true // This would be determined by your auth state
+
+  // Use the client-side session hook from Better Auth
+  const { data: session, isPending } = authClient.useSession()
+  const user = session?.user
+  const isLoggedIn = !!user
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -249,7 +255,10 @@ export default function Navbar() {
             <span className="sr-only">Toggle theme</span>
           </Button>
 
-          {isLoggedIn ? (
+          {isPending ? (
+            // Show skeleton while session is loading
+            <div className="h-8 w-8 rounded-full bg-muted animate-pulse" />
+          ) : isLoggedIn ? (
             <>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -267,7 +276,7 @@ export default function Navbar() {
                     </Badge>
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />
-<div className="max-h-[300px] overflow-y-auto overflow-x-hidden">
+                  <div className="max-h-[300px] overflow-y-auto overflow-x-hidden">
                     <DropdownMenuItem className="flex flex-col items-start gap-1 p-4 cursor-default">
                       <div className="flex w-full justify-between">
                         <span className="font-medium">New collaboration request</span>
@@ -337,16 +346,16 @@ export default function Navbar() {
                 <DropdownMenuTrigger asChild>
                   <Button variant="ghost" className="relative h-8 w-8 rounded-full">
                     <Avatar className="h-8 w-8">
-                      <AvatarImage src="/placeholder.svg?height=32&width=32" alt="@username" />
-                      <AvatarFallback>JD</AvatarFallback>
+                      <AvatarImage alt="@username" />
+                      <AvatarFallback>{user?.name.split(" ").map(n => n[0].toUpperCase()).join("")}</AvatarFallback>
                     </Avatar>
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-56" align="end" forceMount>
                   <div className="flex items-center justify-start gap-2 p-2">
                     <div className="flex flex-col space-y-1 leading-none">
-                      <p className="font-medium">John Doe</p>
-                      <p className="w-[200px] truncate text-sm text-muted-foreground">john.doe@example.com</p>
+                      <p className="font-medium">{user?.name}</p>
+                      <p className="w-[200px] truncate text-sm text-muted-foreground">{user?.email}</p>
                     </div>
                   </div>
                   <DropdownMenuSeparator />
@@ -366,7 +375,7 @@ export default function Navbar() {
                     <Link href="/settings">Settings</Link>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem>Log out</DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => authClient.signOut()}>Log out</DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             </>
