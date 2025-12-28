@@ -71,6 +71,15 @@ export const authSessions = pgTable(
 	]
 )
 
+export const authVerification = pgTable("auth_verification", {
+	id: text("id").primaryKey(),
+	identifier: text("identifier").notNull(),
+	value: text("value").notNull(),
+	expiresAt: timestamp("expires_at").notNull(),
+	createdAt: timestamp("created_at").defaultNow(),
+	updatedAt: timestamp("updated_at").defaultNow(),
+})
+
 /* ────────────────────────────────────────────────
    DOMAIN TABLES (Your App)
    ──────────────────────────────────────────────── */

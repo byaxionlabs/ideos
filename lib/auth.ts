@@ -10,6 +10,7 @@ export const auth = betterAuth({
       user: schema.authUsers,
       account: schema.authAccounts,
       session: schema.authSessions,
+      verification: schema.authVerification,
     },
   }),
 
@@ -30,6 +31,10 @@ export const auth = betterAuth({
       clientId: process.env.DISCORD_CLIENT_ID!,
       clientSecret: process.env.DISCORD_CLIENT_SECRET!,
     },
+    vercel: {
+      clientId: process.env.VERCEL_CLIENT_ID!,
+      clientSecret: process.env.VERCEL_CLIENT_SECRET!,
+    }
   },
 
   // Hook to sync auth_users to domain users table
