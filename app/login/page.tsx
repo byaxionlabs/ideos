@@ -8,9 +8,10 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { Separator } from "@/components/ui/separator"
 import { Mail } from "lucide-react"
 import Github from "@/components/ui/Github"
-import Navbar from "@/components/navbar"
 import { authClient } from "@/lib/auth-client"
 import { useState } from "react"
+import Vercel from "@/components/ui/Vercel"
+import Discord from "@/components/ui/Discord"
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -18,9 +19,9 @@ export default function LoginPage() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [isRemember, setisRemember] = useState(false);
-  const [provider, setProvider] = useState("");
+  // const [provider, setProvider] = useState("");
 
-  async function handleSignInWithProvider() {
+  async function handleSignInWithProvider(provider: string) {
 
     const result = await authClient.signIn.social({
       provider: provider,
@@ -29,10 +30,7 @@ export default function LoginPage() {
 
     if (!result.data) {
       setError(result.error?.message || `Sign-in With ${provider} failed`)
-    } else {
-
     }
-
 
   }
   async function handleSignIn() {
@@ -95,6 +93,7 @@ export default function LoginPage() {
                       {loading ? "Signing in…" : "Login"}
                     </Button>
                   </div>
+                  {error && <p className="mt-2 text-sm text-red-500">{error}</p>}
                   <div className="mt-4 text-center text-sm">
                     Don&apos;t have an account?{" "}
                     <Link href="/register" className="text-primary underline-offset-4 hover:underline">
@@ -109,13 +108,21 @@ export default function LoginPage() {
                     <Separator className="flex-1" />
                   </div>
                   <div className="mt-4 grid grid-cols-2 gap-2">
-                    <Button variant="outline" className="w-full" onClick={() => { setProvider("github"); handleSignInWithProvider() }}>
+                    <Button variant="outline" className="w-full" onClick={() => { handleSignInWithProvider("github") }}>
                       <Github />
                       GitHub
                     </Button>
-                    <Button variant="outline" className="w-full" onClick={() => { setProvider("google"); handleSignInWithProvider() }}>
+                    <Button variant="outline" className="w-full" onClick={() => { handleSignInWithProvider("google") }}>
                       <Mail className="mr-2 h-4 w-4" />
                       Google
+                    </Button>
+                    <Button variant="outline" className="w-full" onClick={() => { handleSignInWithProvider("vercel") }}>
+                      <Vercel />
+                      Vercel
+                    </Button>
+                    <Button variant="outline" className="w-full" onClick={() => { handleSignInWithProvider("discord") }}>
+                      <Discord />
+                      Discord
                     </Button>
                   </div>
                 </CardFooter>
